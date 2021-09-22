@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  UserSearchView.swift
 //  GithubSearcher
 //
 //  Created by nakajima on 2021/09/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct UserSearchView: View {
     @State private var searchText: String = "test"
 
     var body: some View {
@@ -26,8 +26,8 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct UserSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        UserSearchView()
     }
 }
