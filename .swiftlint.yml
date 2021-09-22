@@ -189,5 +189,5 @@ line_length:
   error: 500
 
 #identifier_name:
-#  min_length:
-#    warning: 1 # `r` `g` `b` などを使いたいため
+  min_length:
+    warning: 1 # `r` `g` `b` などを使いたいため

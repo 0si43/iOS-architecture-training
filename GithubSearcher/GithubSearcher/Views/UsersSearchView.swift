@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct UsersSearchView: View {
-    @State private var searchText: String = "0si43"
-    private var users = [
-        User(login: "0si43",
-             avatarUrl: "https://avatars.githubusercontent.com/u/45909001?v=4",
-             reposUrl: "https://api.github.com/users/0si43/repos")
-    ]
+    @State private var searchText: String = "1111"
+    @ObservedObject var model = GithubModel()
+
+    init() {
+        _ = UsersController(model: model, query: searchText)
+    }
 
     var body: some View {
         NavigationView {
             VStack {
                 SearchBar(text: $searchText, placeholder: "user name")
                 Spacer()
-                List(users) { user in
+                List(model.users) { user in
                     NavigationLink(destination: RepositoriesView()) {
                         Text(user.login)
                             .padding()
