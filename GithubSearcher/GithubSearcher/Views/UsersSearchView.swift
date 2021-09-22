@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UserSearchView: View {
+struct UsersSearchView: View {
     @State private var searchText: String = "0si43"
 
     var body: some View {
@@ -28,8 +28,8 @@ struct UserSearchView: View {
     }
 }
 
-struct UserSearchView_Previews: PreviewProvider {
+struct UsersSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        UserSearchView()
+        UsersSearchView()
     }
 }
