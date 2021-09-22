@@ -8,9 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var searchText: String = "test"
+
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            VStack {
+                SearchBar(text: $searchText, placeholder: "user name")
+                Spacer()
+                List {
+                    Text(searchText)
+                        .padding()
+                }
+                Spacer()
+            }
+            .navigationTitle("Search Github User")
+        }
     }
 }
 
