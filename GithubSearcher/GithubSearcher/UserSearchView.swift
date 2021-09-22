@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserSearchView: View {
-    @State private var searchText: String = "test"
+    @State private var searchText: String = "0si43"
 
     var body: some View {
         NavigationView {
@@ -16,8 +16,10 @@ struct UserSearchView: View {
                 SearchBar(text: $searchText, placeholder: "user name")
                 Spacer()
                 List {
-                    Text(searchText)
-                        .padding()
+                    NavigationLink(destination: RepositoriesView()) {
+                        Text(searchText)
+                            .padding()
+                    }
                 }
                 Spacer()
             }

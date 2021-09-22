@@ -9,13 +9,12 @@ import SwiftUI
 
 struct RepositoriesView: View {
     var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    Text("temp")
-                        .padding()
-                }
+        VStack {
+            List {
+                Text("repo name")
+                    .padding()
             }
+
         }
     }
 }
