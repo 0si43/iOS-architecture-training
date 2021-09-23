@@ -11,10 +11,11 @@ import Foundation
 class GithubModel: ObservableObject {
     @Published var users = [User]()
     @Published var isNotFound = false
-    @Published var error: ModelError?
 
     @Published var repositories = [Repository]()
     @Published var isLoading = true
+    
+    @Published var error: ModelError?
 
     private var endpoint: URLComponents {
         var components = URLComponents()
