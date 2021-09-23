@@ -9,10 +9,10 @@ import Foundation
 
 /// イベントの制御を行うクラス
 final class UsersController: ObservableObject {
-    private let model: GithubModel
+    private let model: UserModel
     private let query: String
 
-    init(model: GithubModel, query: String) {
+    init(model: UserModel, query: String) {
         self.model = model
         self.query = query
     }
