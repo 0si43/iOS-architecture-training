@@ -9,13 +9,11 @@ import Foundation
 
 /// イベントの制御を行う構造体
 struct UserController {
-    let model: UserModel
+    let model: GithubModel
     let query: String
 
     /// Modelにロード開始を要求する
     public func loadStart() {
-        Task {
-            await model.fetch(query: query)
-        }
+        model.fetchUser(query: query)
     }
 }

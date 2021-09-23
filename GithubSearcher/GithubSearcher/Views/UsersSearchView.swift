@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UsersSearchView: View {
     @State private var searchText: String = ""
-    @ObservedObject var model = UserModel()
+    @ObservedObject var model = GithubModel()
 
     var body: some View {
         NavigationView {

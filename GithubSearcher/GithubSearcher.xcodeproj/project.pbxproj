@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BFDB9E6126FAED78000C846C /* RepositoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6026FAED78000C846C /* RepositoriesView.swift */; };
-		BFDB9E6326FAF471000C846C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6226FAF471000C846C /* UserModel.swift */; };
+		BFDB9E6326FAF471000C846C /* GithubModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6226FAF471000C846C /* GithubModel.swift */; };
 		BFDB9E6726FAF66A000C846C /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6626FAF66A000C846C /* UserController.swift */; };
 		BFDB9E6926FAF72B000C846C /* RepositoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6826FAF72B000C846C /* RepositoryController.swift */; };
 		BFDB9E7026FB0035000C846C /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6F26FB0035000C846C /* Users.swift */; };
@@ -25,7 +25,7 @@
 
 /* Begin PBXFileReference section */
 		BFDB9E6026FAED78000C846C /* RepositoriesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoriesView.swift; sourceTree = "<group>"; };
-		BFDB9E6226FAF471000C846C /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		BFDB9E6226FAF471000C846C /* GithubModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubModel.swift; sourceTree = "<group>"; };
 		BFDB9E6626FAF66A000C846C /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		BFDB9E6826FAF72B000C846C /* RepositoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryController.swift; sourceTree = "<group>"; };
 		BFDB9E6F26FB0035000C846C /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
@@ -66,7 +66,7 @@
 		BFDB9E6B26FAF76F000C846C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				BFDB9E6226FAF471000C846C /* UserModel.swift */,
+				BFDB9E6226FAF471000C846C /* GithubModel.swift */,
 				BFDB9E7726FC45F4000C846C /* ModelError.swift */,
 				BFDB9E7526FC45E2000C846C /* RepositoryModel.swift */,
 				BFDB9E6F26FB0035000C846C /* Users.swift */,
@@ -215,7 +215,7 @@
 			files = (
 				BFF3E9DD26F9C731001AB153 /* UsersSearchView.swift in Sources */,
 				BFDB9E7626FC45E2000C846C /* RepositoryModel.swift in Sources */,
-				BFDB9E6326FAF471000C846C /* UserModel.swift in Sources */,
+				BFDB9E6326FAF471000C846C /* GithubModel.swift in Sources */,
 				BFDB9E6126FAED78000C846C /* RepositoriesView.swift in Sources */,
 				BFDB9E7826FC45F4000C846C /* ModelError.swift in Sources */,
 				BFDB9E6726FAF66A000C846C /* UserController.swift in Sources */,
