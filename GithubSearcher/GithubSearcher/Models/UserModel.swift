@@ -9,10 +9,17 @@ import Foundation
 
 /// GithubのREST APIを叩いて、ユーザー一覧を返すクラス
 class UserModel: ObservableObject {
-    private let urlString = "https://api.github.com/search/users?q="
     @Published var users = [User]()
     @Published var isNotFound = false
     @Published var error: ModelError?
+    
+    private var endpoint: URLComponents {
+      var components = URLComponents()
+      components.scheme = "https"
+      components.host = "api.github.com"
+      components.path = "search/users"
+      return components
+    }
 
     @MainActor
     public func fetch(query: String) async {
@@ -24,8 +31,10 @@ class UserModel: ObservableObject {
             error =  .encodingError
             return
         }
-
-        guard let url = URL(string: urlString + encodedQuery) else {
+        
+        var urlComponents = endpoint
+        urlComponents.queryItems = [URLQueryItem(name: "q", value: encodedQuery)]
+        guard let url = urlComponents.url else {
             error = .urlError
             return
         }
