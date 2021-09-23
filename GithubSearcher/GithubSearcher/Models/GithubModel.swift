@@ -29,7 +29,8 @@ class GithubModel: ObservableObject {
         error = nil
         isNotFound = false
 
-        guard let url = userSearchEndpoint(query: query) else { return }
+        guard !query.isEmpty,
+              let url = userSearchEndpoint(query: query) else { return }
 
         Task {
             let result = await fetch(url: url)

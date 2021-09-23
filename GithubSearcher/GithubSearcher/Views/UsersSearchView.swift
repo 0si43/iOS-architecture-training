@@ -33,6 +33,9 @@ struct UsersSearchView: View {
                                 UserRow(user: user)
                             }
                         }
+                        .refreshable {
+                            UserController(model: model, query: searchText).loadStart()
+                        }
                     }
                 }
                 Spacer()
