@@ -32,7 +32,6 @@ class GithubModel: ObservableObject {
     @Published var users = [User]()
     @Published var isNotFound = false
     @Published var error: ModelError?
-    private var count = 0
 
     public func fetch(query: String) {
         users = [User]()
