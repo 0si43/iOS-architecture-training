@@ -25,6 +25,9 @@ struct User: Codable, Identifiable {
     let login: String
     let avatarUrl: String
     let reposUrl: String
+    static let mockUser = User(login: "0si43",
+                               avatarUrl: "https://avatars.githubusercontent.com/u/45909001?v=4",
+                               reposUrl: "https://api.github.com/users/0si43/repos")
 
     private enum CodingKeys: String, CodingKey {
         case login

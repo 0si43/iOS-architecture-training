@@ -30,8 +30,7 @@ struct UsersSearchView: View {
                     } else {
                         List(model.users) { user in
                             NavigationLink(destination: RepositoriesView()) {
-                                Text(user.login)
-                                    .padding()
+                                UserRow(user: user)
                             }
                         }
                     }
