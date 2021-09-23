@@ -17,6 +17,7 @@ struct RepositoriesView: View {
         } else {
             if model.isLoading {
                 ProgressView()
+                    .scaleEffect(x: 3, y: 3, anchor: .center)
                     .onAppear {
                         RepositoryController(model: model, urlString: repositoryUrlString).loadStart()
                     }
