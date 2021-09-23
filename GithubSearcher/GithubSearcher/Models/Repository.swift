@@ -12,8 +12,8 @@ struct Repository: Codable, Identifiable {
     let id = UUID()
     let name: String
     let htmlUrl: String
-    let description: String = ""
-    let language: String = ""
+    let description: String?
+    let language: String?
     let stargazersCount: Int
     let forksCount: Int
 
@@ -25,4 +25,11 @@ struct Repository: Codable, Identifiable {
         case stargazersCount = "stargazers_count"
         case forksCount = "forks_count"
     }
+
+    static let mock = Repository(name: "iOS-architecture-training",
+                                 htmlUrl: "https://github.com/0si43/iOS-architecture-training",
+                                 description: "iOSアプリのアーキテクチャーの勉強用のリポジトリです",
+                                 language: "Swift",
+                                 stargazersCount: 1000,
+                                 forksCount: 100)
 }

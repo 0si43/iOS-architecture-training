@@ -22,9 +22,12 @@ struct RepositoriesView: View {
                         RepositoryController(model: model, urlString: repositoryUrlString).loadStart()
                     }
             } else {
-                List(model.repositories) { repository in
-                    Text(repository.name)
-                        .padding()
+                if model.repositories.isEmpty {
+                    Text("No Repository")
+                } else {
+                    List(model.repositories) { repository in
+                        RepositoryRow(repository: repository)
+                    }
                 }
             }
         }
