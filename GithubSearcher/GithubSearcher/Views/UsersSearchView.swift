@@ -16,20 +16,20 @@ struct UsersSearchView: View {
             VStack {
                 TextField("user name", text: $searchText)
                     .onChange(of: searchText) { _ in
-                        UsersController(model: model, query: searchText).loadStart()
+                        UserController(model: model, query: searchText).loadStart()
                     }
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.asciiCapable)
                     .padding()
                 Spacer()
                 if let error = model.error {
-                    errorView(error: error)
+                    Text(error.localizedDescription)
                 } else {
                     if model.isNotFound {
                         Text("user not found")
                     } else {
                         List(model.users) { user in
-                            NavigationLink(destination: RepositoriesView()) {
+                            NavigationLink(destination: RepositoriesView(repositoryUrlString: user.reposUrl)) {
                                 UserRow(user: user)
                             }
                         }
@@ -39,10 +39,6 @@ struct UsersSearchView: View {
             }
             .navigationTitle("🔍Search Github User")
         }
-    }
-
-    private func errorView(error: ModelError) -> Text {
-        return Text(error.localizedDescription)
     }
 }
 

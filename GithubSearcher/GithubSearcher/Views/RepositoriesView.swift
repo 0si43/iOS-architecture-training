@@ -8,20 +8,30 @@
 import SwiftUI
 
 struct RepositoriesView: View {
+    let repositoryUrlString: String
+    @ObservedObject var model = RepositoryModel()
 
     var body: some View {
-        VStack {
-            List {
-                Text("repo name")
-                    .padding()
+        if let error = model.error {
+            Text(error.localizedDescription)
+        } else {
+            if model.isLoading {
+                ProgressView()
+                    .onAppear {
+                        RepositoryController(model: model, urlString: repositoryUrlString).loadStart()
+                    }
+            } else {
+                List(model.repositories) { repository in
+                    Text(repository.name)
+                        .padding()
+                }
             }
-
         }
     }
 }
 
 struct RepositoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoriesView()
+        RepositoriesView(repositoryUrlString: "https://api.github.com/users/0si43/repos")
     }
 }

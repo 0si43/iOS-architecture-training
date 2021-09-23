@@ -9,22 +9,12 @@ import Foundation
 
 /// GithubのREST APIを叩いて、リポジトリ一覧を返すクラス
 class RepositoryModel: ObservableObject {
-    private let urlString = "https://api.github.com/search/users?q="
-    @Published var users = [User]()
-    @Published var isNotFound = false
+    @Published var isLoading = true
+    @Published var repositories = [Repository]()
     @Published var error: ModelError?
 
-    public func fetch(query: String) {
-        users = [User]()
-        error = nil
-        isNotFound = false
-
-        guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
-            publishError(type: .encodingError)
-            return
-        }
-
-        guard let url = URL(string: urlString + encodedQuery) else {
+    public func fetch(urlString: String) {
+        guard let url = URL(string: urlString) else {
             publishError(type: .urlError)
             return
         }
@@ -40,18 +30,14 @@ class RepositoryModel: ObservableObject {
                 return
             }
 
-            guard let users = try? JSONDecoder().decode(Users.self, from: data) else {
+            guard let repositories = try? JSONDecoder().decode([Repository].self, from: data) else {
                 self?.publishError(type: .jsonParseError(String(data: data, encoding: .utf8) ?? ""))
                 return
             }
 
             DispatchQueue.main.async {
-                if users.totalCount == 0 {
-                    self?.isNotFound = true
-                    self?.users = [User]()
-                    return
-                }
-                self?.users = users.items
+                self?.repositories = repositories
+                self?.isLoading = false
             }
         }.resume()
     }
@@ -59,6 +45,7 @@ class RepositoryModel: ObservableObject {
     private func publishError(type: ModelError) {
         DispatchQueue.main.async {[weak self] in
             self?.error = type
+            self?.isLoading = false
         }
     }
 }
