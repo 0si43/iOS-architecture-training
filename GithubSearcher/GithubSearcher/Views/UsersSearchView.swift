@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct UsersSearchView: View {
-    @State private var searchText: String = "1111"
+    @State private var searchText: String = ""
     @ObservedObject var model = GithubModel()
-
-    init() {
-        _ = UsersController(model: model, query: searchText)
-    }
 
     var body: some View {
         NavigationView {
             VStack {
-                SearchBar(text: $searchText, placeholder: "user name")
+                TextField("user name", text: $searchText,
+                          onEditingChanged: { _ in
+                            UsersController(model: model, query: searchText).loadStart()
+                          })
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.asciiCapable)
+                    .padding()
                 Spacer()
                 List(model.users) { user in
                     NavigationLink(destination: RepositoriesView()) {
@@ -28,7 +30,7 @@ struct UsersSearchView: View {
                 }
                 Spacer()
             }
-            .navigationTitle("Search Github User")
+            .navigationTitle("🔍Search Github User")
         }
     }
 }
