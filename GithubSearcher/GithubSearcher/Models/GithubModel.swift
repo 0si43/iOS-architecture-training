@@ -13,6 +13,9 @@ class GithubModel: ObservableObject {
     @Published var isNotFound = false
     @Published var error: ModelError?
 
+    @Published var repositories = [Repository]()
+    @Published var isLoading = true
+
     private var endpoint: URLComponents {
         var components = URLComponents()
         components.scheme = "https"
@@ -37,7 +40,6 @@ class GithubModel: ObservableObject {
                     error = .jsonParseError(String(data: data, encoding: .utf8) ?? "")
                     return
                 }
-
                 publishUsers(users: users)
             case .failure(let error):
                 self.error = .responseError(error)
@@ -79,5 +81,32 @@ class GithubModel: ObservableObject {
             return
         }
         self.users = users.items
+    }
+
+    /// Githubのあるユーザーのリポジトリ一覧を取得して、結果をPublishする
+    public func fetchRepositories(urlString: String) {
+        defer {
+            isLoading = false
+        }
+
+        guard let url = URL(string: urlString) else {
+            error = .urlError
+            return
+        }
+
+        Task {
+            let result = await fetch(url: url)
+
+            switch result {
+            case .success(let data):
+                guard let repositories = try? JSONDecoder().decode([Repository].self, from: data) else {
+                    error = .jsonParseError(String(data: data, encoding: .utf8) ?? "")
+                    return
+                }
+                self.repositories = repositories
+            case .failure(let error):
+                self.error = .responseError(error)
+            }
+        }
     }
 }

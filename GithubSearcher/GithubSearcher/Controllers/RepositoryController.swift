@@ -9,12 +9,12 @@ import Foundation
 
 /// イベントの制御を行う構造体
 struct RepositoryController {
-    let model: RepositoryModel
+    let model: GithubModel
     let urlString: String
 
     /// Modelにロード開始を要求する
     public func loadStart() {
-        model.fetch(urlString: urlString)
+        model.fetchRepositories(urlString: urlString)
     }
 
 }

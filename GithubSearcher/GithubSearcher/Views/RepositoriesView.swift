@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RepositoriesView: View {
     let repositoryUrlString: String
-    @ObservedObject var model = RepositoryModel()
+    @ObservedObject var model = GithubModel()
 
     var body: some View {
         if let error = model.error {
