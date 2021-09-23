@@ -19,14 +19,6 @@ final class UsersController: ObservableObject {
 
     /// Modelにロード開始を要求する
     public func loadStart() {
-        do {
-            try model.fetch(query: query)
-        } catch ModelError.encodingError {
-            print("URLエンコーディングに失敗しました")
-        } catch ModelError.urlError {
-            print("String -> URLの変換に失敗しました")
-        } catch {
-            print("その他のエラーです")
-        }
+        model.fetch(query: query)
     }
 }
