@@ -14,7 +14,7 @@ class GithubModel: ObservableObject {
 
     @Published var repositories = [Repository]()
     @Published var isLoading = true
-    
+
     @Published var error: ModelError?
 
     private var endpoint: URLComponents {
@@ -87,6 +87,9 @@ class GithubModel: ObservableObject {
 
     /// Githubのあるユーザーのリポジトリ一覧を取得して、結果をPublishする
     public func fetchRepositories(urlString: String) {
+        repositories = [Repository]()
+        error = nil
+        isLoading = true
         defer {
             isLoading = false
         }

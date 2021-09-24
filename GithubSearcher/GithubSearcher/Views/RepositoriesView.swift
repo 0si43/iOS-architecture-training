@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct RepositoriesView: View {
+    weak var delegate: ViewProtocol?
     let repositoryUrlString: String
-    @ObservedObject var model = GithubModel()
+    @ObservedObject var model: GithubModel
 
     var body: some View {
         if let error = model.error {
@@ -18,9 +19,6 @@ struct RepositoriesView: View {
             if model.isLoading {
                 ProgressView()
                     .scaleEffect(x: 3, y: 3, anchor: .center)
-                    .onAppear {
-                        RepositoryController(model: model, urlString: repositoryUrlString).loadStart()
-                    }
             } else {
                 if model.repositories.isEmpty {
                     Text("No Repository")
@@ -36,6 +34,6 @@ struct RepositoriesView: View {
 
 struct RepositoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoriesView(repositoryUrlString: "https://api.github.com/users/0si43/repos")
+        RepositoriesView(repositoryUrlString: "https://api.github.com/users/0si43/repos", model: GithubModel())
     }
 }
