@@ -10,7 +10,12 @@ import SwiftUI
 struct UsersSearchView: View {
     weak var delegate: ViewProtocol?
     @State private var searchText: String = ""
-    @ObservedObject var model: GithubModel
+    let type: StateType
+    enum StateType {
+        case display([User])
+        case notFound
+        case error(ModelError)
+    }
 
     var body: some View {
         NavigationView {
@@ -23,24 +28,22 @@ struct UsersSearchView: View {
                     .keyboardType(.asciiCapable)
                     .padding()
                 Spacer()
-                if let error = model.error {
-                    Text(error.localizedDescription)
-                } else {
-                    if model.isNotFound {
-                        Text("user not found")
-                    } else {
-                        List(model.users) { user in
-                            NavigationLink(destination: RepositoriesView(delegate: delegate,
-                                                                         repositoryUrlString: user.reposUrl,
-                                                                         model: model)
-                                            .onAppear { delegate?.loadReository(urlString: user.reposUrl) }) {
-                                UserRow(user: user)
-                            }
-                        }
-                        .refreshable {
-                            delegate?.loadUser(query: searchText)
+                switch type {
+                case .display(let users):
+                    List(users) { user in
+                        NavigationLink(destination: RepositoriesView(delegate: delegate,
+                                                                     repositoryUrlString: user.reposUrl)
+                                        .onAppear { delegate?.loadReository(urlString: user.reposUrl) }) {
+                            UserRow(user: user)
                         }
                     }
+                    .refreshable {
+                        delegate?.loadUser(query: searchText)
+                    }
+                case .notFound:
+                    Text("user not found")
+                case .error(let error):
+                    Text(error.localizedDescription)
                 }
                 Spacer()
             }
@@ -51,6 +54,8 @@ struct UsersSearchView: View {
 
 struct UsersSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        UsersSearchView(model: GithubModel())
+        UsersSearchView(type: .notFound)
+        UsersSearchView(type: .display([User.mockUser]))
+        UsersSearchView(type: .error(.jsonParseError("invalid text")))
     }
 }

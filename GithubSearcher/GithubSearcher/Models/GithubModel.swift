@@ -7,11 +7,14 @@
 
 import Foundation
 
-/// GithubのREST APIを叩いて、結果を返すクラス
-class GithubModel: ObservableObject {
-    @Published var users = [User]()
-    @Published var isNotFound = false
+/// Modelオブジェクトが準拠するプロトコル
+protocol SearchUserModelInput {
+    /// QueryをもとにGithubのユーザー検索APIを叩いて、結果をPublishする
+    func fetchUser(query: String, completion: @escaping (Result<[User], ModelError>) -> Void)
+}
 
+/// GithubのREST APIを叩いて、結果を返すクラス
+class GithubModel: ObservableObject, SearchUserModelInput {
     @Published var repositories = [Repository]()
     @Published var isLoading = true
 
@@ -24,14 +27,12 @@ class GithubModel: ObservableObject {
         return components
     }
 
-    /// QueryをもとにGithubのユーザー検索APIを叩いて、結果をPublishする
-    public func fetchUser(query: String) {
-        users = [User]()
-        error = nil
-        isNotFound = false
-
+    func fetchUser(query: String, completion: @escaping (Result<[User], ModelError>) -> Void) {
         guard !query.isEmpty,
-              let url = userSearchEndpoint(query: query) else { return }
+              let url = userSearchEndpoint(query: query) else {
+            completion(.failure(.urlError))
+            return
+        }
 
         Task {
             let result = await fetch(url: url)
@@ -39,19 +40,18 @@ class GithubModel: ObservableObject {
             switch result {
             case .success(let data):
                 guard let users = try? JSONDecoder().decode(Users.self, from: data) else {
-                    error = .jsonParseError(String(data: data, encoding: .utf8) ?? "")
+                    completion(.failure(.jsonParseError(String(data: data, encoding: .utf8) ?? "")))
                     return
                 }
-                publishUsers(users: users)
+                completion(.success(users.items))
             case .failure(let error):
-                self.error = .responseError(error)
+                completion(.failure(.responseError(error)))
             }
         }
     }
 
     private func userSearchEndpoint(query: String) -> URL? {
         guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
-            error =  .encodingError
             return nil
         }
 
@@ -74,15 +74,6 @@ class GithubModel: ObservableObject {
         } catch {
             return .failure(error)
         }
-    }
-
-    private func publishUsers(users: Users) {
-        if users.totalCount == 0 {
-            isNotFound = true
-            self.users = [User]()
-            return
-        }
-        self.users = users.items
     }
 
     /// Githubのあるユーザーのリポジトリ一覧を取得して、結果をPublishする

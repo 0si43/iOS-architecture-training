@@ -15,22 +15,27 @@ protocol ViewProtocol: AnyObject {
 
 class ViewController: UIViewController {
     private let model = GithubModel()
+    private var userSearchView: UsersSearchView!
+    private var hostingController: UIHostingController<UsersSearchView>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let newViewController = UIHostingController(rootView: UsersSearchView(delegate: self, model: model))
+        userSearchView = UsersSearchView(delegate: self, type: .display([User]()))
+        hostingController = UIHostingController(rootView: userSearchView)
 
-        newViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        newViewController.view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
-        newViewController.view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
+        hostingController.view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
 
-        view.addSubview(newViewController.view)
+        view.addSubview(hostingController.view)
     }
 }
 
 extension ViewController: ViewProtocol {
     func loadUser(query: String) {
-        model.fetchUser(query: query)
+        model.fetchUser(query: query) { [weak self] _ in
+            print("temp")
+        }
     }
 
     func loadReository(urlString: String) {
