@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UsersSearchView: View {
+struct UserSearchView: View {
     weak var delegate: ViewProtocol?
     @State private var searchText: String = ""
     let type: StateType
@@ -31,8 +31,8 @@ struct UsersSearchView: View {
                 switch type {
                 case .display(let users):
                     List(users) { user in
-                        NavigationLink(destination: RepositoriesView(delegate: delegate,
-                                                                     repositoryUrlString: user.reposUrl)
+                        NavigationLink(destination: RepositoryView(delegate: delegate,
+                                                                   repositoryUrlString: user.reposUrl)
                                         .onAppear { delegate?.loadReository(urlString: user.reposUrl) }) {
                             UserRow(user: user)
                         }
@@ -52,10 +52,10 @@ struct UsersSearchView: View {
     }
 }
 
-struct UsersSearchView_Previews: PreviewProvider {
+struct UserSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        UsersSearchView(type: .notFound)
-        UsersSearchView(type: .display([User.mockUser]))
-        UsersSearchView(type: .error(.jsonParseError("invalid text")))
+        UserSearchView(type: .notFound)
+        UserSearchView(type: .display([User.mockUser]))
+        UserSearchView(type: .error(.jsonParseError("invalid text")))
     }
 }

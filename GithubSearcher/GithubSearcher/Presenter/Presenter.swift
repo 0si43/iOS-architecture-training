@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  Presenter.swift
 //  GithubSearcher
 //
 //  Created by nakajima on 2021/09/24.
@@ -13,14 +13,14 @@ protocol ViewProtocol: AnyObject {
     func loadReository(urlString: String)
 }
 
-class ViewController: UIViewController {
+class Presenter: UIViewController {
     private let model = GithubModel()
-    private var userSearchView: UsersSearchView!
-    private var hostingController: UIHostingController<UsersSearchView>!
+    private var userSearchView: UserSearchView!
+    private var hostingController: UIHostingController<UserSearchView>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        userSearchView = UsersSearchView(delegate: self, type: .display([User]()))
+        userSearchView = UserSearchView(delegate: self, type: .display([User]()))
         hostingController = UIHostingController(rootView: userSearchView)
 
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: ViewProtocol {
+extension Presenter: ViewProtocol {
     func loadUser(query: String) {
         guard !query.isEmpty else { return }
 
@@ -40,12 +40,12 @@ extension ViewController: ViewProtocol {
             switch result {
             case .success(let users):
                 if users.isEmpty {
-                    self.userSearchView = UsersSearchView(delegate: self, type: .notFound)
+                    self.userSearchView = UserSearchView(delegate: self, type: .notFound)
                 } else {
-                    self.userSearchView = UsersSearchView(delegate: self, type: .display(users))
+                    self.userSearchView = UserSearchView(delegate: self, type: .display(users))
                 }
             case .failure(let error):
-                self.userSearchView = UsersSearchView(delegate: self, type: .error(error))
+                self.userSearchView = UserSearchView(delegate: self, type: .error(error))
             }
             self.hostingController.rootView = self.userSearchView
         }
