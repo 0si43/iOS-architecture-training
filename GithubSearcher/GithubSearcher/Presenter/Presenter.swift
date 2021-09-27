@@ -18,14 +18,6 @@ class Presenter: UIViewController {
     private var userSearchView: UserSearchView!
     private var hostingController: UIHostingController<UserSearchView>!
     private var model: SearchUserModelInput!
-    private var progressViewAsUIView: UIView {
-        let progressView = ProgressView().scaleEffect(x: 3, y: 3, anchor: .center)
-        let controller = UIHostingController(rootView: progressView)
-        controller.view.translatesAutoresizingMaskIntoConstraints = false
-        controller.view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
-        controller.view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
-        return controller.view
-    }
     private var repositoryView: RepositoryView!
 
     public func inject(view: UserSearchView, model: SearchUserModelInput) {
