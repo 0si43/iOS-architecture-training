@@ -16,12 +16,7 @@ protocol SearchUserModelInput {
 }
 
 /// GithubのREST APIを叩いて、結果を返すクラス
-class GithubModel: ObservableObject, SearchUserModelInput {
-    @Published var repositories = [Repository]()
-    @Published var isLoading = true
-
-    @Published var error: ModelError?
-
+struct GithubModel: SearchUserModelInput {
     private var endpoint: URLComponents {
         var components = URLComponents()
         components.scheme = "https"
@@ -61,7 +56,6 @@ class GithubModel: ObservableObject, SearchUserModelInput {
         urlComponents.path = "/search/users"
         urlComponents.queryItems = [URLQueryItem(name: "q", value: encodedQuery)]
         guard let url = urlComponents.url else {
-            error = .urlError
             return nil
         }
 
