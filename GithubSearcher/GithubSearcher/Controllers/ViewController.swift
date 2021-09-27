@@ -33,8 +33,21 @@ class ViewController: UIViewController {
 
 extension ViewController: ViewProtocol {
     func loadUser(query: String) {
-        model.fetchUser(query: query) { [weak self] _ in
-            print("temp")
+        guard !query.isEmpty else { return }
+
+        model.fetchUser(query: query) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let users):
+                if users.isEmpty {
+                    self.userSearchView = UsersSearchView(delegate: self, type: .notFound)
+                } else {
+                    self.userSearchView = UsersSearchView(delegate: self, type: .display(users))
+                }
+            case .failure(let error):
+                self.userSearchView = UsersSearchView(delegate: self, type: .error(error))
+            }
+            self.hostingController.rootView = self.userSearchView
         }
     }
 
