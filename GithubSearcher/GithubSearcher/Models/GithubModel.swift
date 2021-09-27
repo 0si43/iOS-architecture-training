@@ -14,7 +14,7 @@ class GithubModel: ObservableObject {
 
     @Published var repositories = [Repository]()
     @Published var isLoading = true
-    
+
     @Published var error: ModelError?
 
     private var endpoint: URLComponents {

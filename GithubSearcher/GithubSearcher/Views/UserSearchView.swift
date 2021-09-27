@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UsersSearchView: View {
+struct UserSearchView: View {
     @State private var searchText: String = ""
     @ObservedObject var model = GithubModel()
 
@@ -29,7 +29,7 @@ struct UsersSearchView: View {
                         Text("user not found")
                     } else {
                         List(model.users) { user in
-                            NavigationLink(destination: RepositoriesView(repositoryUrlString: user.reposUrl)) {
+                            NavigationLink(destination: RepositoryView(repositoryUrlString: user.reposUrl)) {
                                 UserRow(user: user)
                             }
                         }
@@ -47,6 +47,6 @@ struct UsersSearchView: View {
 
 struct UsersSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        UsersSearchView()
+        UserSearchView()
     }
 }

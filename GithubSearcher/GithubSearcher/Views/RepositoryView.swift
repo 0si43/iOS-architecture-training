@@ -1,5 +1,5 @@
 //
-//  RepositoriesView.swift
+//  RepositoryView.swift
 //  GithubSearcher
 //
 //  Created by nakajima on 2021/09/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RepositoriesView: View {
+struct RepositoryView: View {
     let repositoryUrlString: String
     @ObservedObject var model = GithubModel()
 
@@ -36,6 +36,6 @@ struct RepositoriesView: View {
 
 struct RepositoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoriesView(repositoryUrlString: "https://api.github.com/users/0si43/repos")
+        RepositoryView(repositoryUrlString: "https://api.github.com/users/0si43/repos")
     }
 }
