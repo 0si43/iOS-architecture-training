@@ -11,6 +11,7 @@ struct RepositoryView: View {
     let type: StateType
     enum StateType {
         case display([Repository])
+        case loading
         case error(ModelError)
     }
 
@@ -24,6 +25,8 @@ struct RepositoryView: View {
                     RepositoryRow(repository: repository)
                 }
             }
+        case .loading:
+            ProgressView().scaleEffect(x: 3, y: 3, anchor: .center)
         case .error(let error):
             Text(error.localizedDescription)
         }

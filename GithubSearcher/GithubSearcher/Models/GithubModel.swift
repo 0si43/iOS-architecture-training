@@ -9,9 +9,10 @@ import Foundation
 
 /// Modelオブジェクトが準拠するプロトコル
 protocol SearchUserModelInput {
-    /// QueryをもとにGithubのユーザー検索APIを叩いて、結果をPublishする
+    /// QueryをもとにGithubのユーザー検索APIを叩いて、結果をcallbackする
     func fetchUser(query: String, completion: @escaping (Result<[User], ModelError>) -> Void)
-    //    func fetchRepository(urlString: String, completion: @escaping (Result<[Repository], ModelError>) -> Void)
+    /// Githubのあるユーザーのリポジトリ一覧を取得して、結果をcallbackする
+    func fetchRepository(urlString: String, completion: @escaping (Result<[Repository], ModelError>) -> Void)
 }
 
 /// GithubのREST APIを叩いて、結果を返すクラス
@@ -77,11 +78,9 @@ class GithubModel: ObservableObject, SearchUserModelInput {
         }
     }
 
-    /// Githubのあるユーザーのリポジトリ一覧を取得して、結果をPublishする
-    public func fetchRepositories(urlString: String) {
-
+    func fetchRepository(urlString: String, completion: @escaping (Result<[Repository], ModelError>) -> Void) {
         guard let url = URL(string: urlString) else {
-            error = .urlError
+            completion(.failure(.urlError))
             return
         }
 
@@ -91,12 +90,12 @@ class GithubModel: ObservableObject, SearchUserModelInput {
             switch result {
             case .success(let data):
                 guard let repositories = try? JSONDecoder().decode([Repository].self, from: data) else {
-                    error = .jsonParseError(String(data: data, encoding: .utf8) ?? "")
+                    completion(.failure(.jsonParseError(String(data: data, encoding: .utf8) ?? "")))
                     return
                 }
-                self.repositories = repositories
+                completion(.success(repositories))
             case .failure(let error):
-                self.error = .responseError(error)
+                completion(.failure(.responseError(error)))
             }
         }
     }

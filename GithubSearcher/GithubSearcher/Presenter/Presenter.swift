@@ -26,6 +26,7 @@ class Presenter: UIViewController {
         controller.view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
         return controller.view
     }
+    private var repositoryView: RepositoryView!
 
     public func inject(view: UserSearchView, model: SearchUserModelInput) {
         self.userSearchView = view
@@ -67,13 +68,18 @@ extension Presenter: PresenterOutput {
         }
     }
 
+    /// FIXME: 結果を受け取っても、Viewは更新されないので、画面遷移をまるごと書く必要があった
     func transitionToRepository(repositoryUrlString: String) -> RepositoryView {
-        let progressView = progressViewAsUIView
-        view.addSubview(progressView)
+        repositoryView = RepositoryView(type: .loading)
 
-        // load
-        progressView.removeFromSuperview()
-        return RepositoryView(type: .display([]))
+        model.fetchRepository(urlString: repositoryUrlString) { [weak self] result in
+            switch result {
+            case .success(let repositories):
+                self?.repositoryView = RepositoryView(type: .display(repositories))
+            case .failure(let error):
+                self?.repositoryView =  RepositoryView(type: .error(error))
+            }
+        }
+        return repositoryView
     }
-
 }
