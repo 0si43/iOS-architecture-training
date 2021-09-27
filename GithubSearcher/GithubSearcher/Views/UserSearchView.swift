@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserSearchView: View {
-    weak var delegate: ViewProtocol?
+    weak var delegate: PresenterOutput?
     @State private var searchText: String = ""
     let type: StateType
     enum StateType {

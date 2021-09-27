@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RepositoryView: View {
-    weak var delegate: ViewProtocol?
+    weak var delegate: PresenterOutput?
     let repositoryUrlString: String
     //    @ObservedObject var model: GithubModel
 

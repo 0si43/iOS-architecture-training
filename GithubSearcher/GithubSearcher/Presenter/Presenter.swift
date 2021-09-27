@@ -8,19 +8,29 @@
 import UIKit
 import SwiftUI
 
-protocol ViewProtocol: AnyObject {
+/// Presenterからの出力を受けとるクラスが準拠する
+protocol PresenterOutput: AnyObject {
     func loadUser(query: String)
     func loadReository(urlString: String)
 }
 
 class Presenter: UIViewController {
-    private let model = GithubModel()
     private var userSearchView: UserSearchView!
     private var hostingController: UIHostingController<UserSearchView>!
+    private var model: SearchUserModelInput!
+
+    public func inject(view: UserSearchView, model: SearchUserModelInput) {
+        self.userSearchView = view
+        self.model = model
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        userSearchView = UserSearchView(delegate: self, type: .display([User]()))
+        guard model != nil, userSearchView != nil else {
+            print("PresenterにModelとViewを指定してください")
+            return
+        }
+
         hostingController = UIHostingController(rootView: userSearchView)
 
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +41,7 @@ class Presenter: UIViewController {
     }
 }
 
-extension Presenter: ViewProtocol {
+extension Presenter: PresenterOutput {
     func loadUser(query: String) {
         guard !query.isEmpty else { return }
 
@@ -52,6 +62,6 @@ extension Presenter: ViewProtocol {
     }
 
     func loadReository(urlString: String) {
-        model.fetchRepositories(urlString: urlString)
+        //        model.fetchRepositories(urlString: urlString)
     }
 }
