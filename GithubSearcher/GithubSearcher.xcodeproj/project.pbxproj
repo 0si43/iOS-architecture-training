@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BFDB9E6126FAED78000C846C /* RepositoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6026FAED78000C846C /* RepositoriesView.swift */; };
+		BFDB9E6126FAED78000C846C /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6026FAED78000C846C /* RepositoryView.swift */; };
 		BFDB9E6326FAF471000C846C /* GithubModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6226FAF471000C846C /* GithubModel.swift */; };
 		BFDB9E7026FB0035000C846C /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6F26FB0035000C846C /* Users.swift */; };
 		BFDB9E7226FC3C3E000C846C /* UserRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E7126FC3C3E000C846C /* UserRow.swift */; };
@@ -23,7 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BFDB9E6026FAED78000C846C /* RepositoriesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoriesView.swift; sourceTree = "<group>"; };
+		BFDB9E6026FAED78000C846C /* RepositoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryView.swift; sourceTree = "<group>"; };
 		BFDB9E6226FAF471000C846C /* GithubModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubModel.swift; sourceTree = "<group>"; };
 		BFDB9E6F26FB0035000C846C /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		BFDB9E7126FC3C3E000C846C /* UserRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRow.swift; sourceTree = "<group>"; };
@@ -56,7 +56,7 @@
 			children = (
 				BFF3E9DC26F9C731001AB153 /* UserSearchView.swift */,
 				BFDB9E7126FC3C3E000C846C /* UserRow.swift */,
-				BFDB9E6026FAED78000C846C /* RepositoriesView.swift */,
+				BFDB9E6026FAED78000C846C /* RepositoryView.swift */,
 				BFDB9E7926FC53A2000C846C /* RepositoryRow.swift */,
 			);
 			path = Views;
@@ -214,7 +214,7 @@
 			files = (
 				BFF3E9DD26F9C731001AB153 /* UserSearchView.swift in Sources */,
 				BFDB9E6326FAF471000C846C /* GithubModel.swift in Sources */,
-				BFDB9E6126FAED78000C846C /* RepositoriesView.swift in Sources */,
+				BFDB9E6126FAED78000C846C /* RepositoryView.swift in Sources */,
 				BFDB9E7826FC45F4000C846C /* ModelError.swift in Sources */,
 				BFDB9EC426FD501E000C846C /* AppDelegate.swift in Sources */,
 				BFDB9E7A26FC53A2000C846C /* RepositoryRow.swift in Sources */,

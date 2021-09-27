@@ -11,13 +11,21 @@ import SwiftUI
 /// Presenterからの出力を受けとるクラスが準拠する
 protocol PresenterOutput: AnyObject {
     func loadUser(query: String)
-    func loadReository(urlString: String)
+    func transitionToRepository(repositoryUrlString: String) -> RepositoryView
 }
 
 class Presenter: UIViewController {
     private var userSearchView: UserSearchView!
     private var hostingController: UIHostingController<UserSearchView>!
     private var model: SearchUserModelInput!
+    private var progressViewAsUIView: UIView {
+        let progressView = ProgressView().scaleEffect(x: 3, y: 3, anchor: .center)
+        let controller = UIHostingController(rootView: progressView)
+        controller.view.translatesAutoresizingMaskIntoConstraints = false
+        controller.view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
+        controller.view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        return controller.view
+    }
 
     public func inject(view: UserSearchView, model: SearchUserModelInput) {
         self.userSearchView = view
@@ -32,11 +40,9 @@ class Presenter: UIViewController {
         }
 
         hostingController = UIHostingController(rootView: userSearchView)
-
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         hostingController.view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
         hostingController.view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
-
         view.addSubview(hostingController.view)
     }
 }
@@ -61,7 +67,13 @@ extension Presenter: PresenterOutput {
         }
     }
 
-    func loadReository(urlString: String) {
-        //        model.fetchRepositories(urlString: urlString)
+    func transitionToRepository(repositoryUrlString: String) -> RepositoryView {
+        let progressView = progressViewAsUIView
+        view.addSubview(progressView)
+
+        // load
+        progressView.removeFromSuperview()
+        return RepositoryView(type: .display([]))
     }
+
 }

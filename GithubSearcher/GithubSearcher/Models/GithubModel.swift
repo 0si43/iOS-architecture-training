@@ -11,6 +11,7 @@ import Foundation
 protocol SearchUserModelInput {
     /// QueryをもとにGithubのユーザー検索APIを叩いて、結果をPublishする
     func fetchUser(query: String, completion: @escaping (Result<[User], ModelError>) -> Void)
+    //    func fetchRepository(urlString: String, completion: @escaping (Result<[Repository], ModelError>) -> Void)
 }
 
 /// GithubのREST APIを叩いて、結果を返すクラス
@@ -78,12 +79,6 @@ class GithubModel: ObservableObject, SearchUserModelInput {
 
     /// Githubのあるユーザーのリポジトリ一覧を取得して、結果をPublishする
     public func fetchRepositories(urlString: String) {
-        repositories = [Repository]()
-        error = nil
-        isLoading = true
-        defer {
-            isLoading = false
-        }
 
         guard let url = URL(string: urlString) else {
             error = .urlError

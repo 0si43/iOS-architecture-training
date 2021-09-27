@@ -31,9 +31,7 @@ struct UserSearchView: View {
                 switch type {
                 case .display(let users):
                     List(users) { user in
-                        NavigationLink(destination: RepositoryView(delegate: delegate,
-                                                                   repositoryUrlString: user.reposUrl)
-                                        .onAppear { delegate?.loadReository(urlString: user.reposUrl) }) {
+                        NavigationLink(destination: delegate?.transitionToRepository(repositoryUrlString: user.reposUrl)) {
                             UserRow(user: user)
                         }
                     }
