@@ -15,7 +15,7 @@ class UserSearchStore: Store {
         switch action {
         case .searchUser(let users):
             self.users = users
-        case .getReositories(_):
+        case .startRepositoriesLoding, .getReositories(_):
             return
         }
     }

@@ -18,7 +18,7 @@ final class ActionCreator {
     }
 }
 
-// MARK: Search
+// MARK: Search User
 
 extension ActionCreator {
     func searchUser(query: String) {
@@ -26,6 +26,25 @@ extension ActionCreator {
             switch result {
             case .success(let users):
                 self?.dispatcher.dispatch(.searchUser(users))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: Get Repositories
+
+extension ActionCreator {
+    func startRepositoriesLoding() {
+        dispatcher.dispatch(.startRepositoriesLoding)
+    }
+
+    func getRepositories(urlString: String) {
+        githubApi.fetchRepository(urlString: urlString) { [weak self] result in
+            switch result {
+            case .success(let repositories):
+                self?.dispatcher.dispatch(.getReositories(repositories))
             case .failure(let error):
                 print(error.localizedDescription)
             }

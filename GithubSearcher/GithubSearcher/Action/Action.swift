@@ -10,4 +10,5 @@ import Foundation
 enum Action {
     case searchUser([User])
     case getReositories([Repository])
+    case startRepositoriesLoding
 }

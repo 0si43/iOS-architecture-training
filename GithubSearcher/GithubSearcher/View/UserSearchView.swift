@@ -30,8 +30,10 @@ struct UserSearchView: View {
                     .padding()
                 Spacer()
                 List(userSearchStore.users) { user in
-                    //                        NavigationLink(destination: RepositoryView(repositoryUrlString: user.reposUrl)) {
-                    NavigationLink(destination: Text("temp")) {
+                    NavigationLink(destination: RepositoryView(repositoryUrlString: user.reposUrl)
+                                    .onAppear {
+                                        actionCreator.startRepositoriesLoding()
+                                    }) {
                         UserRow(user: user)
                     }
                 }
