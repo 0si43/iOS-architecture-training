@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Store {
+class Store: ObservableObject {
     private lazy var dispatchToken: DispatchToken = {
         return dispatcher.register(callback: { [weak self] action in
             self?.onDispatch(action)

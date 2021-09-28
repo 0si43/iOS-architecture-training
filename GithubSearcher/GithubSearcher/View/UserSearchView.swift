@@ -9,10 +9,13 @@ import SwiftUI
 
 struct UserSearchView: View {
     @State private var searchText: String = ""
-    @StateObject var viewModel: UserSearchViewModel
+    private let actionCreator: ActionCreator
+    @StateObject var userSearchStore: UserSearchStore
 
-    init(viewModel: UserSearchViewModel = UserSearchViewModel()) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+    init(actionCreator: ActionCreator = ActionCreator(),
+         userSearchStore: UserSearchStore = .shared) {
+        self.actionCreator = actionCreator
+        _userSearchStore = StateObject(wrappedValue: userSearchStore)
     }
 
     var body: some View {
@@ -20,29 +23,21 @@ struct UserSearchView: View {
             VStack {
                 TextField("user name", text: $searchText)
                     .onChange(of: searchText) { _ in
-                        viewModel.loadStart(query: searchText)
+                        actionCreator.searchUser(query: searchText)
                     }
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.asciiCapable)
                     .padding()
                 Spacer()
-                if let error = viewModel.error {
-                    Text(error.localizedDescription)
-                } else {
-                    if viewModel.isNotFound {
-                        Text("user not found")
-                    } else {
-                        List(viewModel.users) { user in
-                            NavigationLink(destination: RepositoryView(repositoryUrlString: user.reposUrl)) {
-                                UserRow(user: user)
-                            }
-                        }
-                        .refreshable {
-                            viewModel.loadStart(query: searchText)
-                        }
+                List(userSearchStore.users) { user in
+                    //                        NavigationLink(destination: RepositoryView(repositoryUrlString: user.reposUrl)) {
+                    NavigationLink(destination: Text("temp")) {
+                        UserRow(user: user)
                     }
                 }
-                Spacer()
+                .refreshable {
+                    actionCreator.searchUser(query: searchText)
+                }
             }
             .navigationTitle("🔍Search Github User")
         }
@@ -52,8 +47,5 @@ struct UserSearchView: View {
 struct UsersSearchView_Previews: PreviewProvider {
     static var previews: some View {
         UserSearchView()
-        UserSearchView(viewModel: UserSearchViewModel(users: [User.mockUser]))
-        UserSearchView(viewModel: UserSearchViewModel(isNotFound: true))
-        UserSearchView(viewModel: UserSearchViewModel(error: .jsonParseError("invalid text")))
     }
 }

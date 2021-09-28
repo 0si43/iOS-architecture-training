@@ -15,14 +15,14 @@ final class Dispatcher {
     static let shared = Dispatcher()
 
     let lock: NSLocking
-    private var callbacks: [DispatchToken: (Action) -> ()]
+    private var callbacks: [DispatchToken: (Action) -> Void]
 
     init() {
         self.lock = NSRecursiveLock()
         self.callbacks = [:]
     }
 
-    func register(callback: @escaping (Action) -> ()) -> DispatchToken {
+    func register(callback: @escaping (Action) -> Void) -> DispatchToken {
         lock.lock(); defer { lock.unlock() }
 
         let token =  UUID().uuidString
@@ -38,7 +38,7 @@ final class Dispatcher {
 
     func dispatch(_ action: Action) {
         lock.lock(); defer { lock.unlock() }
-        
+
         callbacks.forEach { _, callback in
             callback(action)
         }

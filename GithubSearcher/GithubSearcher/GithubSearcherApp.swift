@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct GithubSearcherApp: App {
+    private let actionCreator = ActionCreator()
+    private let userSearchStore = UserSearchStore.shared
+
     var body: some Scene {
         WindowGroup {
-            UserSearchView()
+            UserSearchView(actionCreator: actionCreator, userSearchStore: userSearchStore)
         }
     }
 }

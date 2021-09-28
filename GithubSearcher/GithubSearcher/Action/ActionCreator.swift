@@ -17,3 +17,18 @@ final class ActionCreator {
         self.githubApi = githubApi
     }
 }
+
+// MARK: Search
+
+extension ActionCreator {
+    func searchUser(query: String) {
+        githubApi.fetchUser(query: query) { [weak self] result in
+            switch result {
+            case .success(let users):
+                self?.dispatcher.dispatch(.searchUser(users))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
