@@ -5,12 +5,12 @@
 //  Created by nakajima on 2021/09/22.
 //
 
-import SwiftUI
-import UIKit
+import Combine
 
 /// ユーザー検索のViewModel
 class UserSearchViewModel: ObservableObject {
-    let model: GithubModel
+    let model: ModelInput
+    private(set) var objectWillChange = ObservableObjectPublisher()
     @Published var users: [User]
     @Published var isNotFound: Bool
     @Published var error: ModelError?
@@ -25,6 +25,23 @@ class UserSearchViewModel: ObservableObject {
 
     /// Modelにロード開始を要求する
     public func loadStart(query: String) {
-        //        model.fetchUser(query: query)
+        guard !query.isEmpty else { return }
+        users = [User]()
+        isNotFound = false
+        error = nil
+
+        model.fetchUser(query: query) { [weak self] result in
+            switch result {
+            case .success(let users):
+                if !users.isEmpty {
+                    self?.users = users
+                } else {
+                    self?.isNotFound = true
+                }
+            case .failure(let error):
+                self?.error = error
+            }
+            self?.objectWillChange.send()
+        }
     }
 }
