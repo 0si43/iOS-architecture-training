@@ -8,13 +8,13 @@
 import Foundation
 
 /// Modelオブジェクトが準拠するプロトコル
-protocol ModelInput {
+protocol ApiRequestable {
     func fetchUser(query: String, completion: @escaping (Result<[User], ModelError>) -> Void)
     func fetchRepository(urlString: String, completion: @escaping (Result<[Repository], ModelError>) -> Void)
 }
 
 /// GithubのREST APIを叩いて、結果を返すクラス
-struct GithubModel: ModelInput {
+struct GithubApi: ApiRequestable {
     private var endpoint: URLComponents {
         var components = URLComponents()
         components.scheme = "https"

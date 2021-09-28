@@ -9,7 +9,7 @@ import Combine
 
 /// ユーザー検索のViewModel
 class UserSearchViewModel: ObservableObject {
-    let model: ModelInput
+    let model: ApiRequestable
     private(set) var objectWillChange = ObservableObjectPublisher()
     @Published var users: [User]
     @Published var isNotFound: Bool
