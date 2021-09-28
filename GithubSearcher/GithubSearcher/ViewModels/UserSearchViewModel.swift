@@ -24,7 +24,7 @@ class UserSearchViewModel: ObservableObject {
     }
 
     /// Modelにロード開始を要求する
-    public func loadStart(query: String) {
+    func loadStart(query: String) {
         guard !query.isEmpty else { return }
         users = [User]()
         isNotFound = false

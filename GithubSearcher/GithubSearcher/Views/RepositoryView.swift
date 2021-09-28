@@ -9,34 +9,44 @@ import SwiftUI
 
 struct RepositoryView: View {
     let repositoryUrlString: String
-    //    @ObservedObject var model = GithubModel()
+    @StateObject var viewModel: RepositoryViewModel
+
+    init(viewModel: RepositoryViewModel = RepositoryViewModel(), repositoryUrlString: String) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        self.repositoryUrlString = repositoryUrlString
+    }
 
     var body: some View {
-        Text("temp")
-        //        if let error = model.error {
-        //            Text(error.localizedDescription)
-        //        } else {
-        //            if model.isLoading {
-        //                ProgressView()
-        //                    .scaleEffect(x: 3, y: 3, anchor: .center)
-        //                    .onAppear {
-        //                        RepositoryController(model: model, urlString: repositoryUrlString).loadStart()
-        //                    }
-        //            } else {
-        //                if model.repositories.isEmpty {
-        //                    Text("No Repository")
-        //                } else {
-        //                    List(model.repositories) { repository in
-        //                        RepositoryRow(repository: repository)
-        //                    }
-        //                }
-        //            }
-        //        }
+        if let error = viewModel.error {
+            Text(error.localizedDescription)
+        } else {
+            if viewModel.isLoading {
+                ProgressView()
+                    .scaleEffect(x: 3, y: 3, anchor: .center)
+                    .onAppear {
+                        viewModel.loadStart(urlString: repositoryUrlString)
+                    }
+            } else {
+                if viewModel.repositories.isEmpty {
+                    Text("No Repository")
+                } else {
+                    List(viewModel.repositories) { repository in
+                        RepositoryRow(repository: repository)
+                    }
+                }
+            }
+        }
     }
 }
 
 struct RepositoriesView_Previews: PreviewProvider {
     static var previews: some View {
         RepositoryView(repositoryUrlString: "https://api.github.com/users/0si43/repos")
+        RepositoryView(viewModel: RepositoryViewModel(
+            repositories: [Repository.mock],
+            isLoading: false
+        ),
+        repositoryUrlString: "")
+        RepositoryView(viewModel: RepositoryViewModel(error: .jsonParseError("invalid text")), repositoryUrlString: "")
     }
 }
