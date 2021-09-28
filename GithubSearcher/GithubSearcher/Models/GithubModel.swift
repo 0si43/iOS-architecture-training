@@ -7,16 +7,14 @@
 
 import Foundation
 
+/// Modelオブジェクトが準拠するプロトコル
+protocol ModelInput {
+    func fetchUser(query: String, completion: @escaping (Result<[User], ModelError>) -> Void)
+    func fetchRepository(urlString: String, completion: @escaping (Result<[Repository], ModelError>) -> Void)
+}
+
 /// GithubのREST APIを叩いて、結果を返すクラス
-class GithubModel: ObservableObject {
-    @Published var users = [User]()
-    @Published var isNotFound = false
-
-    @Published var repositories = [Repository]()
-    @Published var isLoading = true
-
-    @Published var error: ModelError?
-
+struct GithubModel: ModelInput {
     private var endpoint: URLComponents {
         var components = URLComponents()
         components.scheme = "https"
@@ -24,14 +22,13 @@ class GithubModel: ObservableObject {
         return components
     }
 
-    /// QueryをもとにGithubのユーザー検索APIを叩いて、結果をPublishする
-    public func fetchUser(query: String) {
-        users = [User]()
-        error = nil
-        isNotFound = false
-
+    /// QueryをもとにGithubのユーザー検索APIを叩いて、結果をcallbackする
+    func fetchUser(query: String, completion: @escaping (Result<[User], ModelError>) -> Void) {
         guard !query.isEmpty,
-              let url = userSearchEndpoint(query: query) else { return }
+              let url = userSearchEndpoint(query: query) else {
+            completion(.failure(.urlError))
+            return
+        }
 
         Task {
             let result = await fetch(url: url)
@@ -39,19 +36,18 @@ class GithubModel: ObservableObject {
             switch result {
             case .success(let data):
                 guard let users = try? JSONDecoder().decode(Users.self, from: data) else {
-                    error = .jsonParseError(String(data: data, encoding: .utf8) ?? "")
+                    completion(.failure(.jsonParseError(String(data: data, encoding: .utf8) ?? "")))
                     return
                 }
-                publishUsers(users: users)
+                completion(.success(users.items))
             case .failure(let error):
-                self.error = .responseError(error)
+                completion(.failure(.responseError(error)))
             }
         }
     }
 
     private func userSearchEndpoint(query: String) -> URL? {
         guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
-            error =  .encodingError
             return nil
         }
 
@@ -59,7 +55,6 @@ class GithubModel: ObservableObject {
         urlComponents.path = "/search/users"
         urlComponents.queryItems = [URLQueryItem(name: "q", value: encodedQuery)]
         guard let url = urlComponents.url else {
-            error = .urlError
             return nil
         }
 
@@ -76,23 +71,10 @@ class GithubModel: ObservableObject {
         }
     }
 
-    private func publishUsers(users: Users) {
-        if users.totalCount == 0 {
-            isNotFound = true
-            self.users = [User]()
-            return
-        }
-        self.users = users.items
-    }
-
-    /// Githubのあるユーザーのリポジトリ一覧を取得して、結果をPublishする
-    public func fetchRepositories(urlString: String) {
-        defer {
-            isLoading = false
-        }
-
+    /// Githubのあるユーザーのリポジトリ一覧を取得して、結果をcallbackする
+    func fetchRepository(urlString: String, completion: @escaping (Result<[Repository], ModelError>) -> Void) {
         guard let url = URL(string: urlString) else {
-            error = .urlError
+            completion(.failure(.urlError))
             return
         }
 
@@ -102,12 +84,12 @@ class GithubModel: ObservableObject {
             switch result {
             case .success(let data):
                 guard let repositories = try? JSONDecoder().decode([Repository].self, from: data) else {
-                    error = .jsonParseError(String(data: data, encoding: .utf8) ?? "")
+                    completion(.failure(.jsonParseError(String(data: data, encoding: .utf8) ?? "")))
                     return
                 }
-                self.repositories = repositories
+                completion(.success(repositories))
             case .failure(let error):
-                self.error = .responseError(error)
+                completion(.failure(.responseError(error)))
             }
         }
     }

@@ -9,32 +9,36 @@ import SwiftUI
 
 struct UserSearchView: View {
     @State private var searchText: String = ""
-    @ObservedObject var model = GithubModel()
+    @StateObject var viewModel: UserSearchViewModel
+
+    init(viewModel: UserSearchViewModel = UserSearchViewModel()) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         NavigationView {
             VStack {
                 TextField("user name", text: $searchText)
                     .onChange(of: searchText) { _ in
-                        UserController(model: model, query: searchText).loadStart()
+                        viewModel.loadStart(query: searchText)
                     }
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.asciiCapable)
                     .padding()
                 Spacer()
-                if let error = model.error {
+                if let error = viewModel.error {
                     Text(error.localizedDescription)
                 } else {
-                    if model.isNotFound {
+                    if viewModel.isNotFound {
                         Text("user not found")
                     } else {
-                        List(model.users) { user in
+                        List(viewModel.users) { user in
                             NavigationLink(destination: RepositoryView(repositoryUrlString: user.reposUrl)) {
                                 UserRow(user: user)
                             }
                         }
                         .refreshable {
-                            UserController(model: model, query: searchText).loadStart()
+                            viewModel.loadStart(query: searchText)
                         }
                     }
                 }
@@ -48,5 +52,8 @@ struct UserSearchView: View {
 struct UsersSearchView_Previews: PreviewProvider {
     static var previews: some View {
         UserSearchView()
+        UserSearchView(viewModel: UserSearchViewModel(users: [User.mockUser]))
+        UserSearchView(viewModel: UserSearchViewModel(isNotFound: true))
+        UserSearchView(viewModel: UserSearchViewModel(error: .jsonParseError("invalid text")))
     }
 }

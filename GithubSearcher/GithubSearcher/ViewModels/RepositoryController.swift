@@ -12,9 +12,13 @@ struct RepositoryController {
     let model: GithubModel
     let urlString: String
 
+    //    @Published var repositories = [Repository]()
+    //    @Published var isLoading = true
+    //    @Published var error: ModelError?
+
     /// Modelにロード開始を要求する
     public func loadStart() {
-        model.fetchRepositories(urlString: urlString)
+        //        model.fetchRepositories(urlString: urlString)
     }
 
 }
