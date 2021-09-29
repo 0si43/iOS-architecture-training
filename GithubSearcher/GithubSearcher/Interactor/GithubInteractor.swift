@@ -1,5 +1,5 @@
 //
-//  GithubModel.swift
+//  GithubInteractor.swift
 //  GithubSearcher
 //
 //  Created by nakajima on 2021/09/22.
@@ -14,7 +14,7 @@ protocol ModelInput {
 }
 
 /// GithubのREST APIを叩いて、結果を返すクラス
-struct GithubModel: ModelInput {
+struct GithubInteractor: ModelInput {
     private var endpoint: URLComponents {
         var components = URLComponents()
         components.scheme = "https"

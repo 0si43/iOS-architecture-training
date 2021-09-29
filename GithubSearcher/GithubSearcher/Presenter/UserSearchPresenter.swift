@@ -1,5 +1,5 @@
 //
-//  UserSearchViewModel.swift
+//  UserSearchPresenter.swift
 //  GithubSearcher
 //
 //  Created by nakajima on 2021/09/22.
@@ -8,14 +8,14 @@
 import Combine
 
 /// ユーザー検索のViewModel
-class UserSearchViewModel: ObservableObject {
+class UserSearchPresenter: ObservableObject {
     let model: ModelInput
     private(set) var objectWillChange = ObservableObjectPublisher()
     @Published var users: [User]
     @Published var isNotFound: Bool
     @Published var error: ModelError?
 
-    init(model: GithubModel = GithubModel(),
+    init(model: GithubInteractor = GithubInteractor(),
          users: [User] = [User](), isNotFound: Bool = false, error: ModelError? = nil) {
         self.model = model
         self.users = users

@@ -1,5 +1,5 @@
 //
-//  RepositoryViewModel.swift
+//  RepositoryPresenter.swift
 //  GithubSearcher
 //
 //  Created by nakajima on 2021/09/22.
@@ -8,13 +8,13 @@
 import Combine
 
 /// リポジトリ一覧のViewModel
-class RepositoryViewModel: ObservableObject {
+class RepositoryPresenter: ObservableObject {
     let model: ModelInput
     @Published var repositories: [Repository]
     @Published var isLoading: Bool
     @Published var error: ModelError?
 
-    init(model: ModelInput = GithubModel(),
+    init(model: ModelInput = GithubInteractor(),
          repositories: [Repository] = [Repository](), isLoading: Bool = true, error: ModelError? = nil) {
         self.model = model
         self.repositories = repositories

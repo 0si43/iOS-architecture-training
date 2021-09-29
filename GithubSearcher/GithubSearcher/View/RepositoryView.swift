@@ -9,28 +9,28 @@ import SwiftUI
 
 struct RepositoryView: View {
     let repositoryUrlString: String
-    @StateObject var viewModel: RepositoryViewModel
+    @StateObject var presenter: RepositoryPresenter
 
-    init(viewModel: RepositoryViewModel = RepositoryViewModel(), repositoryUrlString: String) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+    init(presenter: RepositoryPresenter = RepositoryPresenter(), repositoryUrlString: String) {
+        _presenter = StateObject(wrappedValue: presenter)
         self.repositoryUrlString = repositoryUrlString
     }
 
     var body: some View {
-        if let error = viewModel.error {
+        if let error = presenter.error {
             Text(error.localizedDescription)
         } else {
-            if viewModel.isLoading {
+            if presenter.isLoading {
                 ProgressView()
                     .scaleEffect(x: 3, y: 3, anchor: .center)
                     .onAppear {
-                        viewModel.loadStart(urlString: repositoryUrlString)
+                        presenter.loadStart(urlString: repositoryUrlString)
                     }
             } else {
-                if viewModel.repositories.isEmpty {
+                if presenter.repositories.isEmpty {
                     Text("No Repository")
                 } else {
-                    List(viewModel.repositories) { repository in
+                    List(presenter.repositories) { repository in
                         RepositoryRow(repository: repository)
                     }
                 }
@@ -42,11 +42,11 @@ struct RepositoryView: View {
 struct RepositoriesView_Previews: PreviewProvider {
     static var previews: some View {
         RepositoryView(repositoryUrlString: "https://api.github.com/users/0si43/repos")
-        RepositoryView(viewModel: RepositoryViewModel(
+        RepositoryView(presenter: RepositoryPresenter(
             repositories: [Repository.mock],
             isLoading: false
         ),
         repositoryUrlString: "")
-        RepositoryView(viewModel: RepositoryViewModel(error: .jsonParseError("invalid text")), repositoryUrlString: "")
+        RepositoryView(presenter: RepositoryPresenter(error: .jsonParseError("invalid text")), repositoryUrlString: "")
     }
 }
