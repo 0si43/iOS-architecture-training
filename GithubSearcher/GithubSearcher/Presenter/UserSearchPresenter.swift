@@ -9,6 +9,7 @@ import Combine
 
 /// ユーザー検索のViewModel
 class UserSearchPresenter: ObservableObject {
+    let router = UserSearchRouter()
     let model: ModelInput
     private(set) var objectWillChange = ObservableObjectPublisher()
     @Published var users: [User]

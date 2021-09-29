@@ -33,9 +33,7 @@ struct UserSearchView: View {
                         Text("user not found")
                     } else {
                         List(presenter.users) { user in
-                            NavigationLink(destination: RepositoryView(repositoryUrlString: user.reposUrl)) {
-                                UserRow(user: user)
-                            }
+                            presenter.router.navigationLink(user: user)
                         }
                         .refreshable {
                             presenter.loadStart(query: searchText)
