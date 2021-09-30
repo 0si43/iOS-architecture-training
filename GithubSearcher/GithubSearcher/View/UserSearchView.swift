@@ -8,7 +8,10 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct AppEnvironment { }
+struct AppEnvironment {
+    var githubApi = GithubApi.live
+    var mainQueue: AnySchedulerOf<DispatchQueue> = .main
+}
 
 struct AppState: Equatable {
     var users = [User]()
@@ -20,19 +23,24 @@ enum AppAction: Equatable {
     case response(Result<[User], ModelError>)
 }
 
-let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, _ in
+let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
     switch action {
-    case .searchQueryEditing(let query):
+    case let .searchQueryEditing(query):
+        struct SearchUserId: Hashable {}
+
+        let temp = environment.githubApi
+            .users(query)
+            .receive(on: environment.mainQueue)
+            .catchToEffect(AppAction.response)
+            .cancellable(id: SearchUserId(), cancelInFlight: true)
+        print(temp)
+        return temp
+    case let .response(.success(users)):
+        state.users = users
         return .none
-    case .response(let result):
-        switch result {
-        case .success(let users):
-            state.users = users
-            return .none
-        case .failure(let error):
-            print(error.localizedDescription)
-            return .none
-        }
+    case let .response(.failure(error)):
+        print(error)
+        return .none
     }
 }
 
@@ -70,8 +78,14 @@ struct UserSearchView: View {
     }
 }
 
-//struct UsersSearchView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserSearchView(store: Store())
-//    }
-//}
+struct UsersSearchView_Previews: PreviewProvider {
+    static var previews: some View {
+        UserSearchView(
+            store: Store(
+                initialState: AppState(users: [User.mockUser], searchQuery: ""),
+                reducer: appReducer,
+                environment: AppEnvironment()
+            )
+        )
+    }
+}
