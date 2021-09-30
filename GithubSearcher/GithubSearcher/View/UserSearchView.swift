@@ -28,13 +28,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case let .searchQueryEditing(query):
         struct SearchUserId: Hashable {}
 
-        let temp = environment.githubApi
+        return environment.githubApi
             .users(query)
             .receive(on: environment.mainQueue)
             .catchToEffect(AppAction.response)
             .cancellable(id: SearchUserId(), cancelInFlight: true)
-        print(temp)
-        return temp
     case let .response(.success(users)):
         state.users = users
         return .none
