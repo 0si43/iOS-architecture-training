@@ -7,19 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF10CBDB270311CF008B3D4B /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF10CBDA270311CF008B3D4B /* Action.swift */; };
-		BF10CBDD2703128C008B3D4B /* ActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF10CBDC2703128C008B3D4B /* ActionCreator.swift */; };
-		BF10CBDF2703132C008B3D4B /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF10CBDE2703132C008B3D4B /* Dispatcher.swift */; };
-		BF10CBE12703146C008B3D4B /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF10CBE02703146C008B3D4B /* Store.swift */; };
-		BF10CBE3270315D6008B3D4B /* UserSearchStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF10CBE2270315D6008B3D4B /* UserSearchStore.swift */; };
-		BF10CBE527031F37008B3D4B /* RepositoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF10CBE427031F37008B3D4B /* RepositoryStore.swift */; };
-		BFDB9E6126FAED78000C846C /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6026FAED78000C846C /* RepositoryView.swift */; };
 		BFDB9E6326FAF471000C846C /* GithubApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6226FAF471000C846C /* GithubApi.swift */; };
 		BFDB9E7026FB0035000C846C /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E6F26FB0035000C846C /* Users.swift */; };
 		BFDB9E7226FC3C3E000C846C /* UserRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E7126FC3C3E000C846C /* UserRow.swift */; };
 		BFDB9E7426FC41B4000C846C /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E7326FC41B4000C846C /* Repository.swift */; };
 		BFDB9E7826FC45F4000C846C /* ModelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E7726FC45F4000C846C /* ModelError.swift */; };
-		BFDB9E7A26FC53A2000C846C /* RepositoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB9E7926FC53A2000C846C /* RepositoryRow.swift */; };
+		BFE9272927058B4800636FBE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = BFE9272827058B4800636FBE /* ComposableArchitecture */; };
 		BFF3E9DB26F9C731001AB153 /* GithubSearcherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF3E9DA26F9C731001AB153 /* GithubSearcherApp.swift */; };
 		BFF3E9DD26F9C731001AB153 /* UserSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF3E9DC26F9C731001AB153 /* UserSearchView.swift */; };
 		BFF3E9DF26F9C733001AB153 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFF3E9DE26F9C733001AB153 /* Assets.xcassets */; };
@@ -27,19 +20,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF10CBDA270311CF008B3D4B /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
-		BF10CBDC2703128C008B3D4B /* ActionCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCreator.swift; sourceTree = "<group>"; };
-		BF10CBDE2703132C008B3D4B /* Dispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
-		BF10CBE02703146C008B3D4B /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
-		BF10CBE2270315D6008B3D4B /* UserSearchStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchStore.swift; sourceTree = "<group>"; };
-		BF10CBE427031F37008B3D4B /* RepositoryStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryStore.swift; sourceTree = "<group>"; };
-		BFDB9E6026FAED78000C846C /* RepositoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryView.swift; sourceTree = "<group>"; };
 		BFDB9E6226FAF471000C846C /* GithubApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubApi.swift; sourceTree = "<group>"; };
 		BFDB9E6F26FB0035000C846C /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		BFDB9E7126FC3C3E000C846C /* UserRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRow.swift; sourceTree = "<group>"; };
 		BFDB9E7326FC41B4000C846C /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		BFDB9E7726FC45F4000C846C /* ModelError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelError.swift; sourceTree = "<group>"; };
-		BFDB9E7926FC53A2000C846C /* RepositoryRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryRow.swift; sourceTree = "<group>"; };
 		BFF3E9D726F9C731001AB153 /* GithubSearcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubSearcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFF3E9DA26F9C731001AB153 /* GithubSearcherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubSearcherApp.swift; sourceTree = "<group>"; };
 		BFF3E9DC26F9C731001AB153 /* UserSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchView.swift; sourceTree = "<group>"; };
@@ -52,46 +37,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFE9272927058B4800636FBE /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BF10CBD72703108A008B3D4B /* Action */ = {
-			isa = PBXGroup;
-			children = (
-				BF10CBDA270311CF008B3D4B /* Action.swift */,
-				BF10CBDC2703128C008B3D4B /* ActionCreator.swift */,
-			);
-			path = Action;
-			sourceTree = "<group>";
-		};
-		BF10CBD8270310DC008B3D4B /* Dispatcher */ = {
-			isa = PBXGroup;
-			children = (
-				BF10CBDE2703132C008B3D4B /* Dispatcher.swift */,
-			);
-			path = Dispatcher;
-			sourceTree = "<group>";
-		};
-		BF10CBD9270310F6008B3D4B /* Store */ = {
-			isa = PBXGroup;
-			children = (
-				BF10CBE02703146C008B3D4B /* Store.swift */,
-				BF10CBE2270315D6008B3D4B /* UserSearchStore.swift */,
-				BF10CBE427031F37008B3D4B /* RepositoryStore.swift */,
-			);
-			path = Store;
-			sourceTree = "<group>";
-		};
 		BFDB9E6A26FAF751000C846C /* View */ = {
 			isa = PBXGroup;
 			children = (
 				BFF3E9DC26F9C731001AB153 /* UserSearchView.swift */,
 				BFDB9E7126FC3C3E000C846C /* UserRow.swift */,
-				BFDB9E6026FAED78000C846C /* RepositoryView.swift */,
-				BFDB9E7926FC53A2000C846C /* RepositoryRow.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -130,9 +87,6 @@
 				BFDB9E6B26FAF76F000C846C /* Utils */,
 				BFDB9E6A26FAF751000C846C /* View */,
 				BFF3E9DE26F9C733001AB153 /* Assets.xcassets */,
-				BF10CBD72703108A008B3D4B /* Action */,
-				BF10CBD8270310DC008B3D4B /* Dispatcher */,
-				BF10CBD9270310F6008B3D4B /* Store */,
 				BFF3E9E026F9C733001AB153 /* Preview Content */,
 			);
 			path = GithubSearcher;
@@ -163,6 +117,9 @@
 			dependencies = (
 			);
 			name = GithubSearcher;
+			packageProductDependencies = (
+				BFE9272827058B4800636FBE /* ComposableArchitecture */,
+			);
 			productName = GithubSearcher;
 			productReference = BFF3E9D726F9C731001AB153 /* GithubSearcher.app */;
 			productType = "com.apple.product-type.application";
@@ -191,6 +148,9 @@
 				Base,
 			);
 			mainGroup = BFF3E9CE26F9C731001AB153;
+			packageReferences = (
+				BFE9272727058B4800636FBE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = BFF3E9D826F9C731001AB153 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -238,20 +198,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF10CBE12703146C008B3D4B /* Store.swift in Sources */,
 				BFF3E9DD26F9C731001AB153 /* UserSearchView.swift in Sources */,
-				BF10CBE3270315D6008B3D4B /* UserSearchStore.swift in Sources */,
-				BF10CBDB270311CF008B3D4B /* Action.swift in Sources */,
 				BFDB9E6326FAF471000C846C /* GithubApi.swift in Sources */,
-				BFDB9E6126FAED78000C846C /* RepositoryView.swift in Sources */,
-				BF10CBDF2703132C008B3D4B /* Dispatcher.swift in Sources */,
 				BFDB9E7826FC45F4000C846C /* ModelError.swift in Sources */,
-				BFDB9E7A26FC53A2000C846C /* RepositoryRow.swift in Sources */,
 				BFDB9E7026FB0035000C846C /* Users.swift in Sources */,
 				BFDB9E7426FC41B4000C846C /* Repository.swift in Sources */,
 				BFF3E9DB26F9C731001AB153 /* GithubSearcherApp.swift in Sources */,
-				BF10CBDD2703128C008B3D4B /* ActionCreator.swift in Sources */,
-				BF10CBE527031F37008B3D4B /* RepositoryStore.swift in Sources */,
 				BFDB9E7226FC3C3E000C846C /* UserRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -461,6 +413,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BFE9272727058B4800636FBE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BFE9272827058B4800636FBE /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BFE9272727058B4800636FBE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BFF3E9CF26F9C731001AB153 /* Project object */;
 }

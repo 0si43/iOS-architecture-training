@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ComposableArchitecture
 
 /// Modelオブジェクトが準拠するプロトコル
 protocol ApiRequestable {

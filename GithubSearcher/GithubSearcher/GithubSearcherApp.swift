@@ -6,15 +6,19 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct GithubSearcherApp: App {
-    private let actionCreator = ActionCreator()
-    private let userSearchStore = UserSearchStore.shared
-
     var body: some Scene {
         WindowGroup {
-            UserSearchView(actionCreator: actionCreator, userSearchStore: userSearchStore)
+            UserSearchView(
+                store: Store(
+                    initialState: AppState(),
+                    reducer: appReducer.debug(),
+                    environment: AppEnvironment()
+                )
+            )
         }
     }
 }

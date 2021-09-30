@@ -6,48 +6,68 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
-struct UserSearchView: View {
-    @State private var searchText: String = ""
-    private let actionCreator: ActionCreator
-    @StateObject var userSearchStore: UserSearchStore
+struct AppEnvironment { }
 
-    init(actionCreator: ActionCreator = ActionCreator(),
-         userSearchStore: UserSearchStore = .shared) {
-        self.actionCreator = actionCreator
-        _userSearchStore = StateObject(wrappedValue: userSearchStore)
-    }
+struct AppState: Equatable {
+    var users = [User]()
+}
 
-    var body: some View {
-        NavigationView {
-            VStack {
-                TextField("user name", text: $searchText)
-                    .onChange(of: searchText) { _ in
-                        actionCreator.searchUser(query: searchText)
-                    }
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .keyboardType(.asciiCapable)
-                    .padding()
-                Spacer()
-                List(userSearchStore.users) { user in
-                    NavigationLink(destination: RepositoryView(repositoryUrlString: user.reposUrl)
-                                    .onAppear {
-                                        actionCreator.startRepositoriesLoding()
-                                    }) {
-                        UserRow(user: user)
-                    }
-                }
-                .refreshable {
-                    actionCreator.searchUser(query: searchText)
-                }
-            }
-            .navigationTitle("🔍Search Github User")
+enum AppAction: Equatable {
+    case searchQueryEditing(String)
+    case response(Result<[User], ModelError>)
+}
+
+let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, _ in
+    switch action {
+    case .searchQueryEditing(let query):
+        return .none
+    case .response(let result):
+        switch result {
+        case .success(let users):
+            state.users = users
+            return .none
+        case .failure(let error):
+            print(error.localizedDescription)
+            return .none
         }
     }
 }
 
-struct UsersSearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserSearchView()
+struct UserSearchView: View {
+    let store: Store<AppState, AppAction>
+    @State private var searchText: String = ""
+
+    var body: some View {
+        WithViewStore(self.store) { viewStore in
+            NavigationView {
+                VStack {
+                    TextField("user name", text: $searchText)
+                        .onChange(of: searchText) { _ in
+                            viewStore.send(.searchQueryEditing(searchText))
+                        }
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .keyboardType(.asciiCapable)
+                        .padding()
+                    Spacer()
+                    List(viewStore.users) { user in
+                        NavigationLink(destination: Text(":TODO")) {
+                            UserRow(user: user)
+                        }
+                    }
+                    .refreshable {
+                        viewStore.send(.searchQueryEditing(searchText))
+                    }
+                }
+                .navigationTitle("🔍Search Github User")
+            }
+        }
     }
 }
+
+//struct UsersSearchView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserSearchView(store: Store())
+//    }
+//}

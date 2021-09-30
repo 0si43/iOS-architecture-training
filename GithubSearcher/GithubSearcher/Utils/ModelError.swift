@@ -8,7 +8,17 @@
 import Foundation
 
 /// APIを叩く際に発生する可能性のあるエラー一覧
-enum ModelError: Error {
+enum ModelError: Error, Equatable {
+    static func == (lhs: ModelError, rhs: ModelError) -> Bool {
+        switch (lhs, rhs) {
+        case (.urlError, .urlError), (.responseError, .responseError),
+             (.responseDataEmpty, .responseDataEmpty), (.jsonParseError, .jsonParseError):
+            return true
+        default:
+            return false
+        }
+    }
+
     case urlError
     case responseError(Error)
     case responseDataEmpty
