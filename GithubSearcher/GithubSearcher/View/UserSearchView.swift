@@ -12,6 +12,7 @@ struct AppEnvironment { }
 
 struct AppState: Equatable {
     var users = [User]()
+    var searchQuery: String = ""
 }
 
 enum AppAction: Equatable {
@@ -37,19 +38,22 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, _
 
 struct UserSearchView: View {
     let store: Store<AppState, AppAction>
-    @State private var searchText: String = ""
 
     var body: some View {
         WithViewStore(self.store) { viewStore in
             NavigationView {
                 VStack {
-                    TextField("user name", text: $searchText)
-                        .onChange(of: searchText) { _ in
-                            viewStore.send(.searchQueryEditing(searchText))
-                        }
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(.asciiCapable)
-                        .padding()
+                    TextField("user name",
+                              text: viewStore.binding(
+                                get: \.searchQuery, send: AppAction.searchQueryEditing
+                              )
+                    )
+                    .onChange(of: viewStore.searchQuery) { _ in
+                        viewStore.send(.searchQueryEditing(viewStore.searchQuery))
+                    }
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.asciiCapable)
+                    .padding()
                     Spacer()
                     List(viewStore.users) { user in
                         NavigationLink(destination: Text(":TODO")) {
@@ -57,7 +61,7 @@ struct UserSearchView: View {
                         }
                     }
                     .refreshable {
-                        viewStore.send(.searchQueryEditing(searchText))
+                        viewStore.send(.searchQueryEditing(viewStore.searchQuery))
                     }
                 }
                 .navigationTitle("🔍Search Github User")
